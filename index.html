@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Valentine's Surprise 💕</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&family=Playfair+Display:wght@600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Name entry screen -->
+  <section id="name-screen" class="screen active">
+    <div class="floating-hearts" aria-hidden="true"></div>
+    <div class="name-box">
+      <h1>💕 A Little Surprise For You 💕</h1>
+      <p class="subtitle">Enter your names to begin</p>
+      <form id="name-form">
+        <label>
+          <span>Your name</span>
+          <input type="text" id="his-name" placeholder="Your name" maxlength="30" autocomplete="name" />
+        </label>
+        <label>
+          <span>Your girlfriend's name</span>
+          <input type="text" id="her-name" placeholder="Her name" maxlength="30" autocomplete="name" />
+        </label>
+        <button type="submit" class="btn-primary">Start the surprise</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Valentine prompt screen -->
+  <section id="valentine-screen" class="screen">
+    <div class="name-box valentine-box">
+      <h1 class="valentine-title"><span id="valentine-boyfriend">You</span>, will you be my Valentine?</h1>
+      <p class="subtitle">You only get one correct answer.</p>
+      <div class="valentine-actions" id="valentine-actions">
+        <button id="valentine-yes" class="btn-primary valentine-yes" type="button">Yes, no doubt 💕</button>
+        <button id="valentine-no" class="btn-game valentine-no" type="button">No</button>
+      </div>
+      <p id="valentine-status" class="mini-status"></p>
+    </div>
+  </section>
+
+  <!-- Game hub -->
+  <section id="game-screen" class="screen">
+    <!-- Animated heart collectors (background) -->
+    <div id="collector-layer" class="collector-layer" aria-hidden="true">
+      <div id="heart-basket" class="heart-basket">🧺</div>
+      <div class="collector collector-left">
+        <div class="collector-head"></div>
+        <div class="collector-body"></div>
+        <div class="collector-arm"></div>
+        <div class="collector-bag"></div>
+      </div>
+      <div class="collector collector-right">
+        <div class="collector-head"></div>
+        <div class="collector-body"></div>
+        <div class="collector-arm"></div>
+        <div class="collector-bag"></div>
+      </div>
+      <div id="collector-hearts" class="collector-hearts"></div>
+      <div id="bonus-pop" class="bonus-pop hidden">+1</div>
+    </div>
+
+    <header class="game-header">
+      <span class="names-display" id="page-title"></span>
+      <div class="points-display">
+        <span class="points-label">Points</span>
+        <span id="points-value">0</span>
+      </div>
+    </header>
+    <div class="games-hub">
+      <h2>Win points to unlock your surprise!</h2>
+      <div class="game-cards">
+        <article class="game-card" data-game="maze">
+          <span class="game-icon">🌀</span>
+          <h3>Heart Maze</h3>
+          <p>Reach the 💘 in time. Earn <strong>80 points</strong>.</p>
+          <button class="btn-game">Play</button>
+        </article>
+        <article class="game-card" data-game="quiz">
+          <span class="game-icon">❓</span>
+          <h3>Finance + Love Quiz</h3>
+          <p>10 questions. <strong>10 seconds each</strong>. Earn <strong>10 points</strong> per correct.</p>
+          <button class="btn-game">Play</button>
+        </article>
+        <article class="game-card" data-game="puzzle">
+          <span class="game-icon">💝</span>
+          <h3>Heart Slide Puzzle</h3>
+          <p>Solve before time runs out. Earn <strong>90 points</strong>.</p>
+          <button class="btn-game">Play</button>
+        </article>
+
+        <article class="game-card" data-game="scramble">
+          <span class="game-icon">🔤</span>
+          <h3>Word Scramble</h3>
+          <p>Unscramble 5 words fast. Earn <strong>60 points</strong>.</p>
+          <button class="btn-game">Play</button>
+        </article>
+
+        <article class="game-card" data-game="math">
+          <span class="game-icon">🧮</span>
+          <h3>Money Math Sprint</h3>
+          <p>Timed finance math. Earn up to <strong>100 points</strong>.</p>
+          <button class="btn-game">Play</button>
+        </article>
+
+        <article class="game-card" data-game="catch">
+          <span class="game-icon">🧺</span>
+          <h3>Catch the Hearts</h3>
+          <p>Catch hearts in the basket, avoid bombs! 60s. <strong>10 pts</strong> per heart.</p>
+          <button class="btn-game">Play</button>
+        </article>
+      </div>
+      <p class="points-hint">Get <strong>300+ points</strong> to see your surprise!</p>
+      <details class="points-breakdown">
+        <summary>Points guide (how to reach 300)</summary>
+        <ul>
+          <li><strong>Heart Maze</strong>: 80</li>
+          <li><strong>Finance + Love Quiz</strong>: up to 100 (10 × 10 correct)</li>
+          <li><strong>Heart Slide Puzzle</strong>: 90</li>
+          <li><strong>Word Scramble</strong>: 60</li>
+          <li><strong>Money Math Sprint</strong>: up to 100</li>
+          <li><strong>Catch the Hearts</strong>: 10 per heart (avoid bombs!)</li>
+        </ul>
+        <p class="points-note">Total possible: <strong>510</strong>. You need <strong>300</strong> to unlock the surprise.</p>
+      </details>
+      <button id="claim-surprise" class="btn-primary" disabled>Claim my surprise!</button>
+    </div>
+  </section>
+
+  <!-- Maze modal -->
+  <div id="maze-modal" class="modal">
+    <div class="modal-content">
+      <button class="modal-close" aria-label="Close">&times;</button>
+      <h3>Heart Maze</h3>
+      <p class="modal-points">Reach the 💘 before time ends. Use arrows below or keyboard (WASD / Arrow keys). +80 points.</p>
+      <div class="mini-game">
+        <div class="mini-row">
+          <span class="mini-label">Time</span>
+          <span id="maze-timer" class="mini-value">45s</span>
+        </div>
+        <canvas id="maze-canvas" width="300" height="300" class="maze-canvas"></canvas>
+        <div class="maze-arrows" aria-label="Move">
+          <button type="button" class="maze-arrow maze-arrow-up" data-dir="up" aria-label="Up">▲</button>
+          <div class="maze-arrows-row">
+            <button type="button" class="maze-arrow maze-arrow-left" data-dir="left" aria-label="Left">◀</button>
+            <span class="maze-arrows-center"></span>
+            <button type="button" class="maze-arrow maze-arrow-right" data-dir="right" aria-label="Right">▶</button>
+          </div>
+          <button type="button" class="maze-arrow maze-arrow-down" data-dir="down" aria-label="Down">▼</button>
+        </div>
+        <p id="maze-status" class="mini-status"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quiz modal -->
+  <div id="quiz-modal" class="modal">
+    <div class="modal-content">
+      <button class="modal-close" aria-label="Close">&times;</button>
+      <h3>Finance + Love Quiz</h3>
+      <div id="quiz-container">
+        <div class="mini-row" style="margin-top:0.25rem;">
+          <span class="mini-label">Timer</span>
+          <span id="quiz-timer" class="mini-value">10s</span>
+        </div>
+        <p id="quiz-question" class="quiz-question"></p>
+        <div id="quiz-options" class="quiz-options"></div>
+        <p id="quiz-feedback" class="quiz-feedback hidden"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Puzzle modal -->
+  <div id="puzzle-modal" class="modal">
+    <div class="modal-content">
+      <button class="modal-close" aria-label="Close">&times;</button>
+      <h3>Heart Slide Puzzle</h3>
+      <p class="modal-points">Solve before time ends. +90 points.</p>
+      <div class="mini-row" style="margin-top:0.25rem;">
+        <span class="mini-label">Time</span>
+        <span id="puzzle-timer" class="mini-value">90s</span>
+      </div>
+      <div id="puzzle-grid" class="puzzle-grid"></div>
+      <p class="modal-points" style="margin-top: 0.75rem;">Tip: Click a tile next to the empty space.</p>
+    </div>
+  </div>
+
+  <!-- Word scramble modal -->
+  <div id="scramble-modal" class="modal">
+    <div class="modal-content">
+      <button class="modal-close" aria-label="Close">&times;</button>
+      <h3>Word Scramble</h3>
+      <p class="modal-points">Unscramble 5 words before time ends. +60 points.</p>
+      <div id="scramble-container" class="mini-game">
+        <div class="mini-row">
+          <span class="mini-label">Time</span>
+          <span id="scramble-timer" class="mini-value">60s</span>
+        </div>
+        <div class="mini-row">
+          <span class="mini-label">Scrambled</span>
+          <span id="scramble-word" class="mini-value"></span>
+        </div>
+        <div class="mini-row">
+          <input id="scramble-input" class="mini-input" type="text" placeholder="Type the word…" autocomplete="off" />
+          <button id="scramble-submit" class="btn-game" type="button">Submit</button>
+        </div>
+        <p id="scramble-status" class="mini-status"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Math sprint modal -->
+  <div id="math-modal" class="modal">
+    <div class="modal-content">
+      <button class="modal-close" aria-label="Close">&times;</button>
+      <h3>Money Math Sprint</h3>
+      <p class="modal-points">60 seconds. +10 per correct (max 100). Finance-flavoured questions.</p>
+      <div id="math-container" class="mini-game">
+        <div class="mini-row">
+          <span class="mini-label">Time</span>
+          <span id="math-timer" class="mini-value">60s</span>
+        </div>
+        <div class="mini-row">
+          <span class="mini-label">Question</span>
+          <span id="math-question" class="mini-value"></span>
+        </div>
+        <div class="mini-row">
+          <input id="math-input" class="mini-input" type="number" inputmode="numeric" placeholder="Answer…" />
+          <button id="math-submit" class="btn-game" type="button">Go</button>
+        </div>
+        <p id="math-status" class="mini-status"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Catch the Hearts modal -->
+  <div id="catch-modal" class="modal">
+    <div class="modal-content">
+      <button class="modal-close" aria-label="Close">&times;</button>
+      <h3>Catch the Hearts</h3>
+      <p class="modal-points">Move the basket (arrows or touch). Catch 💗 hearts (+10), avoid 💣 bombs! 60s. 3 lives.</p>
+      <div class="mini-game">
+        <div class="mini-row">
+          <span class="mini-label">Time</span>
+          <span id="catch-timer" class="mini-value">60s</span>
+          <span class="mini-label">Lives</span>
+          <span id="catch-lives" class="mini-value">❤️❤️❤️</span>
+          <span class="mini-label">Score</span>
+          <span id="catch-score" class="mini-value">0</span>
+        </div>
+        <canvas id="catch-canvas" width="320" height="360" class="catch-canvas"></canvas>
+        <div class="catch-touch-row">
+          <button type="button" class="catch-move left" aria-label="Move left">◀</button>
+          <button type="button" class="catch-move right" aria-label="Move right">▶</button>
+        </div>
+        <p id="catch-status" class="mini-status"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Win overlay: hugging bots + Happy Valentine -->
+  <section id="win-screen" class="screen overlay">
+    <div class="confetti" aria-hidden="true"></div>
+    <div class="win-content">
+      <div class="hugging-bots" aria-hidden="true">
+        <div class="bot bot-left">
+          <div class="bot-head">
+            <div class="bot-face">
+              <span class="bot-eye left"></span>
+              <span class="bot-eye right"></span>
+              <span class="bot-mouth"></span>
+              <span class="bot-blush left"></span>
+              <span class="bot-blush right"></span>
+            </div>
+          </div>
+          <div class="bot-body">
+            <div class="bot-belly"></div>
+          </div>
+          <div class="bot-arm arm-left"></div>
+          <div class="bot-arm arm-left-2"></div>
+        </div>
+        <div class="bot bot-right">
+          <div class="bot-head">
+            <div class="bot-face">
+              <span class="bot-eye left"></span>
+              <span class="bot-eye right"></span>
+              <span class="bot-mouth"></span>
+              <span class="bot-blush left"></span>
+              <span class="bot-blush right"></span>
+            </div>
+          </div>
+          <div class="bot-body">
+            <div class="bot-belly"></div>
+          </div>
+          <div class="bot-arm arm-right"></div>
+          <div class="bot-arm arm-right-2"></div>
+        </div>
+        <div class="hug-heart">💞</div>
+      </div>
+      <h2 class="win-title">Happy Valentine's Day!</h2>
+      <p class="win-names"></p>
+      <button id="see-message" class="btn-primary">Read your message</button>
+    </div>
+  </section>
+
+  <!-- Sweet message screen -->
+  <section id="message-screen" class="screen">
+    <div class="message-content">
+      <h2>To the one I love 💕</h2>
+      <div id="message-reveal-wrap" class="message-text">
+        <!-- Filled by JS: jumbled words, then revealed word by word -->
+      </div>
+      <button id="reveal-message-btn" class="btn-primary btn-reveal">Reveal the message</button>
+      <button id="replay" class="btn-primary">Play again</button>
+    </div>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
